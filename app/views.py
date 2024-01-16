@@ -28,11 +28,22 @@ def signup(request):
         email = data['email']
         pass1 = data['password']
         phone = data['phone']
-        insti_type = data['institype']
-        insti_name = data['insti']
+        college = data['college']
         year = data['year']
+        instituteID = data['instituteID']
         stream = data['stream']
-        
+        # print(username, email, pass1, pass2)
+        # checks for same username
+        # if User.objects.filter(username=username).first():
+        #     return Response(
+        #         {'status': 404,
+        #             "registered": False,
+        #             'message': "Username already registered",
+        #             "username": username
+        #             }
+        #     )
+
+        # checks if the username exists
         if User.objects.filter(email=email).first():
             return Response({
                 'status': 404,
@@ -49,14 +60,38 @@ def signup(request):
             new_user.is_active = False
             new_user.save()
 
-            institute = Institute.objects.get_or_create(instiName=insti_name, institutionType=insti_type)[0]
-            # institute = Institute.objects.get(instiName=instituteID)
+            institutee = Institute.objects.get_or_create(instiName=instituteID)
+            institute = Institute.objects.get(instiName=instituteID)
 
             print(institute.pk)
 
 
-            profile = Profile.objects.create(userId=new_user.id,username=username, email=email, phone=phone, instituteID=institute.pk, joinYear=year, stream=stream)
-            profile.save()
+            ca_profile = Profile.objects.create(userId=new_user.id,username=username, email=email, phone=phone, instituteID=institute.pk, joinYear=year)
+            ca_code = ca_profile.CA
+            ca_profile.save()
+
+            # Confirmation link mail
+            current_site = get_current_site(request)
+            email_subject = "Petrichor Fest - Campus Ambassador Programme Confirmation"
+            confirmation_message = render_to_string('confirmation_email.html',
+                                                    {
+                                                        'username': username,
+                                                        'domain': current_site.domain,
+                                                        'uid': urlsafe_base64_encode(force_bytes(new_user.pk)),
+                                                        'token': generate_token.make_token(new_user)
+                                                    })   # add a html template
+            email_cnf = EmailMessage(
+                email_subject,
+                confirmation_message,
+                settings.EMAIL_HOST_USER,
+                [new_user.email],
+            )
+            email_cnf.fail_silently = False
+            print(settings.EMAIL_BACKEND, "a")
+            email_cnf.send()
+            print("mail sent to", new_user.email)
+
+            # Sending Email with CA code
             return Response({
                 'status': 200,
                 "registered": "true",
@@ -81,6 +116,7 @@ def user_login(request):
             profile = Profile.objects.get(email=username)
             return Response({
                 "ok": "true",
+                "CA": profile.CA,
                 "username": profile.username,
                 "registrations": 0
             })
