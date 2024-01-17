@@ -153,12 +153,12 @@ def admin_data(request):
     
     data = request.data
     password = data["password"]
-    # if "PWD" not in settings.os.environ:
-    #     return Response({
-    #         "status": 500,
-    #         "message": "Password not set at host, Contact someone idk."
-    #     })
-    if password == "password":
+    if "PWD" not in settings.os.environ:
+        return Response({
+            "status": 500,
+            "message": "Password not set at host, Contact someone idk."
+        })
+    if password == settings.os.environ["password"]:
         return Response({
             'status': 200,
             'data': [
