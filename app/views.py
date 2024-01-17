@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -10,8 +10,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.request import Request, Empty
-from .resp import r500, r200
-from .models import *
+from .resp import r500,r200
+from .models import Profile,EventTable,Event
 from userapi import settings
 from .tokens import generate_token
 from django.core.mail import EmailMessage, send_mail
@@ -30,8 +30,6 @@ def signup(request):
         phone = data['phone']
         college = data['college']
         year = data['year']
-        instituteID = data['instituteID']
-        stream = data['stream']
         # print(username, email, pass1, pass2)
         # checks for same username
         # if User.objects.filter(username=username).first():
@@ -60,17 +58,11 @@ def signup(request):
             new_user.is_active = False
             new_user.save()
 
-            institutee = Institute.objects.get_or_create(instiName=instituteID)
-            institute = Institute.objects.get(instiName=instituteID)
-
-            print(institute.pk)
-
-
-            ca_profile = Profile.objects.create(userId=new_user.id,username=username, email=email, phone=phone, instituteID=institute.pk, joinYear=year)
+            ca_profile = Profile.objects.create(userId=new_user.id,username=username, email=email, phone=phone, college=college, year=year)
             ca_code = ca_profile.CA
             ca_profile.save()
 
-            # Confirmation link mail
+            # Confimation link mail
             current_site = get_current_site(request)
             email_subject = "Petrichor Fest - Campus Ambassador Programme Confirmation"
             confirmation_message = render_to_string('confirmation_email.html',
@@ -92,13 +84,15 @@ def signup(request):
             print("mail sent to", new_user.email)
 
             # Sending Email with CA code
+
+
+
             return Response({
                 'status': 200,
                 "registered": "true",
                 'message': "Success",
                 "username": username
             })
-
 
 @api_view(['POST'])
 def user_login(request):
@@ -144,14 +138,12 @@ def admin_data(request):
     
     data = request.data
     password = data["password"]
-    # if "PWD" not in settings.os.environ:
-    #     return Response({
-    #         "status": 500,
-    #         "message": "Password not set at host, Contact someone idk."
-    #     })
-    # if password == settings.os.environ["password"]:
-    if password == "password":
-
+    if "PWD" not in settings.os.environ:
+        return Response({
+            "status": 500,
+            "message": "Password not set at host, Contact someone idk."
+        })
+    if password == settings.os.environ["password"]:
         return Response({
             'status': 200,
             'data': [
@@ -392,3 +384,32 @@ def verifyTR(request):
                 'msg':"Opps!! Unable to complete the request!!!"
             })
     
+
+@api_view(['POST'])
+def send_grievance(request: Request):
+    try:
+        data = request.data
+        if isinstance(data, Empty) or data is None:
+            return r500("Invalid Form")
+        
+        name = data['name'] # type: ignore
+        email = data['email'] # type: ignore
+        content = data['content'] # type: ignore
+
+        send_mail(
+            subject=f"Grievance from {name}",
+            message=f"From {name} ({email}).\n\n{content}",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=["112201015@smail.iitpkd.ac.in"]
+        )
+        print("grievance email sent")
+        return Response({
+                'status':200,
+                'success': True
+            })
+
+    except Exception as e:
+        return Response({
+                'status':400,
+                'success': False
+            })

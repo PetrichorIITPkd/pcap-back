@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/events/',views.getEventUsers ,name="event"),
     path('api/events/verify',views.verifyCA,name="verifyCA"),
     path('api/verifyTR',views.verifyTR,name="verifyTR"),
+    path('api/send_grievance',views.send_grievance,name="send_grievance"),
     path('api/events/unconfirmed',views.getUnconfirmed ,name="unconfirmed"),
     path('activate/<uidb64>/<token>', views.activate, name="activate"),
 ]
