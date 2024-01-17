@@ -1,3 +1,4 @@
+from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
@@ -24,6 +25,7 @@ def home(request):
 def signup(request):
     if request.method == 'POST':
         data = request.data
+        print(data)
         username = data['username'].strip()
         email = data['email']
         pass1 = data['password']
@@ -52,15 +54,25 @@ def signup(request):
 
         # Creates a new user and adds it to the profile with a new CA_code
         else:
-            new_user = User.objects.create_user(username, email, pass1)
+            try:
+                new_user = User.objects.create_user(username, email, pass1)
+            
 
-            # Not activating the user unless the confirmation mail is opened
-            new_user.is_active = False
-            new_user.save()
+                # Not activating the user unless the confirmation mail is opened
+                new_user.is_active = False
+                new_user.save()
 
-            ca_profile = Profile.objects.create(userId=new_user.id,username=username, email=email, phone=phone, college=college, year=year)
-            ca_code = ca_profile.CA
-            ca_profile.save()
+                ca_profile = Profile.objects.create(username=username, email=email, phone=phone, joinYear=year)
+                ca_code = ca_profile.CA
+                ca_profile.save()
+
+            except IntegrityError:
+                return Response({
+                'status': 404,
+                "registered": False,
+                'message': "Username Already Taken",
+                "username": username
+            })
 
             # Confimation link mail
             current_site = get_current_site(request)
@@ -80,7 +92,9 @@ def signup(request):
             )
             email_cnf.fail_silently = False
             print(settings.EMAIL_BACKEND, "a")
-            email_cnf.send()
+
+            # email_cnf.send()
+            
             print("mail sent to", new_user.email)
 
             # Sending Email with CA code
@@ -104,6 +118,7 @@ def user_login(request):
 
         username = data['username'].strip()
         password = data['password']
+        print(data)
         my_user = authenticate(username = username, password = password)
         if my_user is not None:
             login(request, my_user)
@@ -138,12 +153,12 @@ def admin_data(request):
     
     data = request.data
     password = data["password"]
-    if "PWD" not in settings.os.environ:
-        return Response({
-            "status": 500,
-            "message": "Password not set at host, Contact someone idk."
-        })
-    if password == settings.os.environ["password"]:
+    # if "PWD" not in settings.os.environ:
+    #     return Response({
+    #         "status": 500,
+    #         "message": "Password not set at host, Contact someone idk."
+    #     })
+    if password == "password":
         return Response({
             'status': 200,
             'data': [
@@ -151,8 +166,8 @@ def admin_data(request):
                     'name': ca.username,
                     'email': ca.email,
                     'phone': ca.phone,
-                    'college': ca.college,
-                    'year': ca.year,
+                    'college':  "",
+                    'year': ca.joinYear,
                     'ca': ca.CA,
                 } for ca in Profile.objects.all() if ca.CA is not None
             ]
@@ -229,93 +244,6 @@ def mailtest(request):
     print('email sent to', '112201015@smail.iitpkd.ac.in')
 
     return HttpResponse("email send to")
-
-@api_view(['POST'])
-def apply_event(request):
-
-    if request.data is None:
-        return r500("invalid form")
-    data=request.data
-    print(data,"Apply_Event")
-    try:
-        user_id=data['userid']
-        event_id=data['eventId'].strip()
-        ca_code=data['ca'].strip()
-        transactionId=data['transactionId'].strip()
-
-    except KeyError:
-        return r500("userid, eventid, and cacode required. send all. if cacode is not there send empty string'")
-# try:
-    email=Profile.objects.get(userId=user_id).email
-    verified=False
-    if(email.endswith("smail.iitpkd.ac.in")):
-        verified=True
-        transactionId="Internal Student"
-    print("here")
-    eventTableObject = EventTable.objects.create(eventId=event_id,user_id=user_id,ca_code=ca_code,transactionId=transactionId,verified=verified)
-    eventTableObject.save()
-    return r200("Event applied")
-    # except Exception:
-    #     print(user_id,event_id,transactionId,ca_code,verified)
-    #     return r500("Oopsie Doopsie")
-    
-@api_view(['GET'])
-def getUnconfirmed(request):
-    try:
-        unconfirmed_users=set(EventTable.objects.exclude(transactionId="Internal Student").values_list('user_id'))
-        print(unconfirmed_users)
-        unconfirmed_list=[]
-        for user in unconfirmed_users:
-            user_id=user[0]
-
-            events=EventTable.objects.filter(user_id=user_id)
-            event_dict=dict()
-            for event in events:
-                if not event.verified:
-                    event_dict[Event.objects.get(eventId=event.eventId).name]=event.transactionId
-            
-            user_name=Profile.objects.get(userId=user_id).username
-            unconfirmed_list.append({user_name:event_dict})
-        
-        return Response(
-            {
-                "data":unconfirmed_list
-            }
-        )
-    except Exception as e:
-        return r500("Oopsie Doopsie")
-    
-@api_view(['GET'])
-def getEventUsers(request):
-    if request.method == "GET":
-        events=[]
-        try:
-            allEvents=Event.objects.all()
-            for event in allEvents:
-                participantsId=set(EventTable.objects.filter(eventId=event.eventId).values_list('user_id'))
-                participants=[]
-                for id in participantsId:
-                    user=Profile.objects.get(userId=id[0])
-                    participants.append({
-                        "name":user.username,
-                        "email":user.email,
-                        "phone":user.phone,
-                        "CA":user.CA
-                    })
-                events.append({
-                    "name": event.name,
-                    "participants":participants
-                })
-
-
-            print("Coreect")
-            return Response({
-                'status': 200,
-                'data':["name","email","phone","CA"],
-                "events":events
-            })
-        except Exception as e:
-            return r500("Opps!! Unable to complete the request!!!")
     
 @api_view(['POST'])
 def verifyCA(request):
@@ -350,66 +278,3 @@ def verifyCA(request):
                 'msg':"Opps!! Unable to complete the request!!!"
             })
     
-
-@api_view(['POST'])
-def verifyTR(request):
-    try:
-        if request.data == None:
-            return r500("Invalid Form")
-        
-        data=request.data
-        print("print:",data)
-
-        inputTRId=data['TransactionId'].strip()
-        try:
-            event=EventTable.objects.get(transactionId=inputTRId)
-            return Response({
-                'status' : 200,
-                'verified': True
-            })
-        except Exception as e:
-            return Response({
-                'status':404,
-                'verified': False,
-                'msg':"Not found in our db"
-            })
-
-
-
-
-    except Exception as e:
-        return Response({
-                'status':400,
-                'verified': False,
-                'msg':"Opps!! Unable to complete the request!!!"
-            })
-    
-
-@api_view(['POST'])
-def send_grievance(request: Request):
-    try:
-        data = request.data
-        if isinstance(data, Empty) or data is None:
-            return r500("Invalid Form")
-        
-        name = data['name'] # type: ignore
-        email = data['email'] # type: ignore
-        content = data['content'] # type: ignore
-
-        send_mail(
-            subject=f"Grievance from {name}",
-            message=f"From {name} ({email}).\n\n{content}",
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=["112201015@smail.iitpkd.ac.in"]
-        )
-        print("grievance email sent")
-        return Response({
-                'status':200,
-                'success': True
-            })
-
-    except Exception as e:
-        return Response({
-                'status':400,
-                'success': False
-            })
