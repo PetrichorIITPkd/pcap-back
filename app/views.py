@@ -1,3 +1,4 @@
+import inspect
 from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -256,17 +257,21 @@ def verifyCA(request):
 
         inputCAcode=data['CAcode'].strip()
         try:
-            event=EventTable.objects.get(ca_code=inputCAcode)
+            Profile.objects.get(CA=inputCAcode)
             return Response({
                 'status' : 200,
                 'verified': True
             })
-        except Exception as e:
+        except Profile.DoesNotExist as e:
             return Response({
                 'status':404,
                 'verified': False,
                 'msg':"Not found in our db"
             })
+    
+        except Exception as e:
+            send_error_mail(inspect.stack()[0][3], request.data, e)
+            return r500("Something Bad Happened")
 
 
 
@@ -277,4 +282,13 @@ def verifyCA(request):
                 'verified': False,
                 'msg':"Opps!! Unable to complete the request!!!"
             })
+    
+
+def send_error_mail(name, data, e):
+    if "password" in data.keys():
+        data["password"]=""
+    send_mail(f'Website Error in: {name}',
+                message= f'Exception: {e}\nData: {json.dumps(data)}',
+                recipient_list=['112201015@smail.iitpkd.ac.in','112201020@smail.iitpkd.ac.in'],
+                from_email=settings.EMAIL_HOST_USER)
     
