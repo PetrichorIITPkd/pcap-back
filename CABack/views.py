@@ -13,7 +13,7 @@ from app.views import send_error_mail
 def signup(request):
     data = request.data
     try:
-        dt_fullname = data['fullname'].strip()
+        dt_fullname = data['username'].strip()
         dt_email = data['email']
         dt_password = data['password']
         dt_phone = data['phone']
