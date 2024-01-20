@@ -18,29 +18,37 @@ def signup(request):
         dt_college = data['college']
         dt_year = data['year']
     except KeyError as e:
-        return r500(f'Error: {e}')
+        return Response({
+                'status': 404,
+                "registered": False,
+                'message': "Username Already Taken",
+                "username": username
+            })
     try:
         CAProfile.objects.get(email=dt_email)
-    except CAProfile.DoesNotExist:
         return r500("Email already registered")
+    except CAProfile.DoesNotExist:
+        pass
+    except Exception as e:
+        # send_error_mail(inspect.stack()[0][3], request.data, e)
+        return r500('something went wrong (s1):'+(str)(e))
+
     
     try:
-        user= User.objects.create(username=dt_email,password=dt_password)
-        user.save()
-    except Exception as e:
-        send_error_mail(inspect.stack()[0][3], request.data, e)
-        return r500('something went wrong :'+(str)(e))
-    try:
-        ca_profile= CAProfile.objects.create(fullname=dt_fullname,email=dt_email,phone=dt_phone,college=dt_college,year=dt_year)
-
+        ca_profile= CAProfile(fullname=dt_fullname,email=dt_email,phone=dt_phone,college=dt_college,year=dt_year)
         ca_profile.generate_ca_code()
-
-        ca_profile.save()
-    
     except IntegrityError as e:
-        send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
-        return r500('something went wrong :'+(str)(e))
+        # send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
+        return r500('something went wrong (s3):'+(str)(e))
     except Exception as e:
-        send_error_mail(inspect.stack()[0][3], request.data, e)
-        return r500('something went wrong :'+(str)(e))
+        # send_error_mail(inspect.stack()[0][3], request.data, e)
+        return r500('something went wrong (s4):'+(str)(e))
+    ca_profile.save()
 
+    try:
+        user= User(username=dt_email,password=dt_password)
+        user.save()
+        return r200("")
+    except Exception as e:
+        # send_error_mail(inspect.stack()[0][3], request.data, e)
+        return r500('something went wrong (s2):'+(str)(e))
