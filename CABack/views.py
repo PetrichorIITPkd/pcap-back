@@ -1,6 +1,8 @@
 import inspect
 from django.db import IntegrityError
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.contrib.auth import authenticate
 from CABack.models import CAProfile
 from app.models import User
 from app.resp import r500, r200
@@ -26,15 +28,13 @@ def signup(request):
     
     try:
         user= User.objects.create(username=dt_email,password=dt_password)
-        user.save()
     except Exception as e:
         send_error_mail(inspect.stack()[0][3], request.data, e)
         return r500('something went wrong :'+(str)(e))
     try:
         ca_profile= CAProfile.objects.create(fullname=dt_fullname,email=dt_email,phone=dt_phone,college=dt_college,year=dt_year)
-
         ca_profile.generate_ca_code()
-
+        user.save()
         ca_profile.save()
     
     except IntegrityError as e:
@@ -44,3 +44,26 @@ def signup(request):
         send_error_mail(inspect.stack()[0][3], request.data, e)
         return r500('something went wrong :'+(str)(e))
 
+@api_view(['POST'])
+def login(request):
+    data = request.data
+    try:
+        dt_email = data['email']
+        dt_password = data['password']
+    except KeyError as e:
+        return r500(f'Error: {e}')
+    
+    user = authenticate(username = dt_email, password = dt_password)
+    if user is None:
+        return Response({
+            "message": "The username or password is incorrect",
+            "logged-in": "false"
+        })
+    
+    profile = CAProfile.objects.get(email = dt_email)
+    return Response({
+                "ok": "true",
+                "CA": profile.CA,
+                "username": profile.fullname,
+                "registrations": 0
+            })
