@@ -153,18 +153,6 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_COOKIE_SECURE = True
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://ca.petrichor.events'
-]
-ALLOWED_HOSTS = [
-    'https://ca.petrichor.events'
-]
-CORS_ORIGIN_WHITELIST = [
-    'https://ca.petrichor.events'
-]
-
 
 if not DEBUG:
     pass
