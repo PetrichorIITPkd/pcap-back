@@ -61,10 +61,10 @@ def signup(request):
 
                 # Not activating the user unless the confirmation mail is opened
                 new_user.is_active = False
-                new_user.save()
 
                 ca_profile = Profile.objects.create(username=username, email=email, phone=phone, joinYear=year)
                 ca_code = ca_profile.CA
+                new_user.save()
                 ca_profile.save()
 
             except IntegrityError:
