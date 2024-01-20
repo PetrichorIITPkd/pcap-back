@@ -14,7 +14,7 @@ def signup(request):
     data = request.data
     try:
         dt_fullname = data['fullname'].strip()
-        dt_email = data['email']
+        dt_email = data['email'].strip()
         dt_password = data['password']
         dt_phone = data['phone']
         dt_college = data['college']
@@ -48,8 +48,8 @@ def signup(request):
         })
     
     try:
-        user= User(username=dt_email,password=dt_password)
-        user.save()
+        user= User.objects.create_user(username=dt_email,password=dt_password)
+        print(user.get_username(),"{"+dt_password+"}")
         ca_profile.save()
         return Response({
             "status":200,"registered":True,"message":"User registered successfully"
@@ -64,7 +64,7 @@ def signup(request):
 def login(request):
     data = request.data
     try:
-        dt_email = data['email']
+        dt_email = data['email'].strip()
         dt_password = data['password']
     except KeyError as e:
         return r500(f'Error: {e}')
