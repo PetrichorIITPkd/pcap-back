@@ -1,0 +1,361 @@
+[33mcommit c5cba55772ed16135518ff00aa932a7ba262e5c8[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: a7d3729 9eca5e4
+Author: alonot <priyanshup27092004@gmail.com>
+Date:   Sun Jan 21 02:35:26 2024 +0530
+
+    Merge branch 'main' of https://github.com/enchanteddev/pcap-back
+
+[33mcommit a7d3729e9b0dcf59a8b0ddc5b88fd5f0e254fd1c[m
+Author: alonot <priyanshup27092004@gmail.com>
+Date:   Sun Jan 21 02:34:03 2024 +0530
+
+    signup error fix
+
+[33mcommit 9eca5e47dd9321ccf0152f7172ede76e3ad04bf9[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Sun Jan 21 01:59:56 2024 +0530
+
+    login page
+
+[33mcommit 8b40be1510b2601b48fef48f122dbf4e8bb8bb9f[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Sun Jan 21 01:50:44 2024 +0530
+
+    hotfix
+
+[33mcommit e3727dcbf635aef1de7d45a092d469ea7a6d2b55[m
+Author: alonot <priyanshup27092004@gmail.com>
+Date:   Sun Jan 21 01:49:34 2024 +0530
+
+    signup
+
+[33mcommit e93033bdb629190abfe9dcd40495737492adf048[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Sun Jan 21 01:47:29 2024 +0530
+
+    added new CA model
+
+[33mcommit 94852faeaf4340a3f694fb105ffcc460a2d389d5[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Sun Jan 21 01:32:22 2024 +0530
+
+    newapp
+
+[33mcommit 1ab7a6bb62191ee316896a376211a87a10fefeac[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Thu Jan 18 01:22:02 2024 +0530
+
+    fixed verifyCA
+
+[33mcommit 359f581b652763aead11512e81356681ca829eae[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Thu Jan 18 00:50:34 2024 +0530
+
+    password
+
+[33mcommit 0661b0de61dc30671eeb21acb2499eeaf0169faa[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Thu Jan 18 00:39:04 2024 +0530
+
+    admin page working
+
+[33mcommit 81bebcf4232934990de887ab49db41791ecc38dd[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Wed Jan 17 15:45:53 2024 +0530
+
+    debnug
+
+[33mcommit 47a09f44e42e820486cc3dd8a66fbe1916e0adf6[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Wed Jan 17 15:43:01 2024 +0530
+
+    reverted properly
+
+[33mcommit 727ac0ccaa286290e3bcb65208608b0846cf0230[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Wed Jan 17 15:37:54 2024 +0530
+
+    models reverted
+
+[33mcommit 197394d9703bb86b95fa05aa07a65e7a80001f74[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Wed Jan 17 15:34:12 2024 +0530
+
+    Revert "added send_grievance"
+    
+    This reverts commit 90331d6d7d311d82bd34c42619cdb0863fdc2efe.
+
+[33mcommit fc36be6f381c4431b58cfa1350f46147ba7cc5a6[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Wed Jan 17 15:23:22 2024 +0530
+
+    rm last migration
+
+[33mcommit 2f36058651a9537f3173f71dc390b670d4923a92[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Tue Jan 16 21:54:28 2024 +0530
+
+    debug
+
+[33mcommit 8fb8210531e7d2322a48eb99820ef94fe36da11a[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Tue Jan 16 21:42:02 2024 +0530
+
+    migrations after revert thoda
+
+[33mcommit 8feeda902c51c7aed2855b68ae6ba4f42c13c870[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Tue Jan 16 21:38:31 2024 +0530
+
+    Revert "thoda"
+    
+    This reverts commit b2ebdd8327964d0ea44b83e45169f510d014da11.
+
+[33mcommit b2ebdd8327964d0ea44b83e45169f510d014da11[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Sat Dec 16 23:51:54 2023 +0530
+
+    thoda
+
+[33mcommit 765f21913c9eeed8629d10ddceba136012af0189[m
+Merge: 1477e41 d5d4457
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Mon Dec 11 17:54:45 2023 +0530
+
+    Merge branch 'main' of https://github.com/enchanteddev/pcap-back
+
+[33mcommit d5d4457f0d430eb47dbef6c2e1672c695ed9b039[m
+Merge: b1162a2 a107dc4
+Author: Kaushik Rawat <119434133+enchanteddev@users.noreply.github.com>
+Date:   Mon Dec 11 17:55:32 2023 +0530
+
+    Merge pull request #5 from Kmg13teen/insti
+    
+    institute/joinyear/gradyear
+
+[33mcommit a107dc4f420ec442db20ced44a3277ece52aa33d[m
+Author: Kshitij.G <112101025@smail.iitpkd.ac.in>
+Date:   Sun Dec 10 14:21:49 2023 +0530
+
+    institute name feature
+
+[33mcommit 1477e4125fcc8506c76b20250830bcc0f1edf444[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Dec 8 09:58:36 2023 +0530
+
+    removing redundant columns
+
+[33mcommit b1162a2086f2554106889f6e446dc32d16bf7fad[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Dec 8 09:45:49 2023 +0530
+
+    migrations fixed
+
+[33mcommit 1b29ec06db235e3a31ecf8993bfe83e1a63b8097[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Dec 8 09:19:31 2023 +0530
+
+    debug false
+
+[33mcommit 90331d6d7d311d82bd34c42619cdb0863fdc2efe[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Sun Nov 19 21:16:43 2023 +0530
+
+    added send_grievance
+
+[33mcommit 3a85a536c3e796d4cf3e5ca0a218b425a62bcb47[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Thu Nov 16 21:54:04 2023 +0530
+
+    add admin
+
+[33mcommit f57e2f05d380ffbb4b2afb7ddb9faf9a58c8fc58[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Thu Nov 16 21:38:35 2023 +0530
+
+    13 to 100
+
+[33mcommit cbeb44ff753575ed0f97158c878ce96afb511de9[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Thu Nov 16 21:34:08 2023 +0530
+
+    migrations
+
+[33mcommit 4f5462eabaf8a6f6eed180a5f80663534dc1344a[m
+Merge: cd2a339 6039716
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Thu Nov 16 21:16:48 2023 +0530
+
+    Merge branch 'main' of https://github.com/enchanteddev/pcap-back
+
+[33mcommit cd2a339dd2256b9b503c7ecf6e0eb9de4db897e9[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Thu Nov 16 21:14:21 2023 +0530
+
+    some tests
+
+[33mcommit 603971660d75df2fef2f7217ee2f77f31b2b8233[m
+Merge: e3ff9bd e8e9161
+Author: Kaushik Rawat <119434133+enchanteddev@users.noreply.github.com>
+Date:   Thu Nov 16 21:04:29 2023 +0530
+
+    Merge pull request #4 from alonot/main
+    
+    Merge the current request
+
+[33mcommit e8e91619781ca5f73c5b38c81fd195d6962fe44d[m
+Merge: 8eadec1 e3ff9bd
+Author: Priyanshu Pandey <123316101+alonot@users.noreply.github.com>
+Date:   Thu Nov 16 21:02:56 2023 +0530
+
+    Merge branch 'enchanteddev:main' into main
+
+[33mcommit 8eadec1f8c76f2584e38864234377031914408f2[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Thu Nov 16 21:01:26 2023 +0530
+
+    progress from alonot
+
+[33mcommit e3ff9bdeee6caa173727da4e8a5c5fa5dc9115e5[m
+Merge: 7f9ce92 fe59037
+Author: Kaushik Rawat <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Nov 10 15:08:11 2023 +0530
+
+    Merge pull request #3 from alonot/revert-1-main
+    
+    Revert "Progress from alonot's side"
+
+[33mcommit fe590376eb7a301f920c1d70c5537b8bed1f4037[m
+Author: Priyanshu Pandey <123316101+alonot@users.noreply.github.com>
+Date:   Mon Nov 6 19:29:51 2023 +0530
+
+    Revert "Progress from alonot's side"
+
+[33mcommit 7f9ce921ca5589d3fef92578e03debe1cb0e892a[m
+Merge: 57a3128 68894ce
+Author: Kaushik Rawat <119434133+enchanteddev@users.noreply.github.com>
+Date:   Mon Nov 6 17:30:58 2023 +0530
+
+    Merge pull request #1 from alonot/main
+    
+    Progress from alonot's side
+
+[33mcommit 68894ce10a8ca2a20c8b05742f5fd7cf19182104[m
+Author: alonot <priyanshu27092004@gmail.com>
+Date:   Mon Nov 6 17:24:25 2023 +0530
+
+    version1
+
+[33mcommit 57a31282a23d46ffe5b4a630d1d95149200b4d6c[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Sat Aug 19 03:29:02 2023 +0530
+
+    user.email -> profile.email
+
+[33mcommit 020fc0a8599a9922042a862ac9ec7e83f3bbfdbf[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Aug 18 20:01:36 2023 +0530
+
+    all250
+
+[33mcommit 1a0cb3fe6c3a52410a6f14fef826b63d581aeeeb[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Aug 18 19:39:17 2023 +0530
+
+    migrated
+
+[33mcommit 6a0d9ff1826cac67a382fce87c6a581eb8933033[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Aug 18 19:14:16 2023 +0530
+
+    maxlength
+
+[33mcommit 72a9f7596efff8fdf26b92e2f13671d4cb12602e[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Aug 18 17:41:18 2023 +0530
+
+    PWD
+
+[33mcommit b4be859aca49d3d73c0cc0c05880aba08af93002[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Fri Aug 18 17:30:57 2023 +0530
+
+    added admindata
+
+[33mcommit bfe89ec6b470aa2284b937fe6cad0cf425460651[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Tue Aug 15 16:57:08 2023 +0530
+
+    debug=false
+
+[33mcommit fe85cd94da8397b80cbad2ce06991ecbcb71fbb3[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Tue Aug 15 16:52:38 2023 +0530
+
+    only email main
+
+[33mcommit 1e1e87ac12832fcdacdda2f3673b721efc2ec415[m
+Author: enchanteddev <119434133+enchanteddev@users.noreply.github.com>
+Date:   Tue Aug 15 16:22:08 2023 +0530
+
+    "false"
+
+[33mcommit 45fc5291ef8f4024eaad3678478349586d8f231a[m
+Author: enchanteddev <ex@example.com>
+Date:   Tue Aug 15 15:46:36 2023 +0530
+
+    dirtyfix
+
+[33mcommit 5f3fbe3de7f5102835cf51d5c0380f8039dd4230[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 23:42:31 2023 +0530
+
+    fix69
+
+[33mcommit adc0bce2bc7d959ba088e327d73d80b0fc34799b[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 23:10:50 2023 +0530
+
+    dumbfixx
+
+[33mcommit f73c204ced141dbb4eff72c0e9cf39e7c4fc4897[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 22:55:21 2023 +0530
+
+    fix3
+
+[33mcommit 7d9bc013c9172af13c41824e8d99292feecfb0fa[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 22:53:10 2023 +0530
+
+    fixes2
+
+[33mcommit 4c718a2d3e2dbe7e0753f08f1b7176526b29bd0b[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 22:45:15 2023 +0530
+
+    sixx
+
+[33mcommit 636ee9db1c64b8c0046832f59f7a8c88f62b21cd[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 22:41:47 2023 +0530
+
+    psybin
+
+[33mcommit b51ed50a26f8ed66ce2f09a6026e1d40bf2feee7[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 22:36:48 2023 +0530
+
+    confs
+
+[33mcommit a6331719ef67b1b4d58ad72ac1d795e20a06a5e3[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 22:16:30 2023 +0530
+
+    otherdb
+
+[33mcommit a8bfde61c5fd06ba27ee1f669bb0bfd667eb8651[m
+Author: enchanteddev <ex@example.com>
+Date:   Mon Aug 14 21:55:07 2023 +0530
+
+    deploy1 fr
