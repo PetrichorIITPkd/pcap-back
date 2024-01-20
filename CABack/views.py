@@ -37,12 +37,12 @@ def signup(request):
         ca_profile.generate_ca_code()
     
     except IntegrityError as e:
-        # send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
+        send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
         return Response({
             "status":500,"registered":False,"message":'something went wrong (s2):'+(str)(e)
         })
     except Exception as e:
-        # send_error_mail(inspect.stack()[0][3], request.data, e)
+        send_error_mail(inspect.stack()[0][3], request.data, e)
         return Response({
             "status":500,"registered":False,"message":'something went wrong (s3):'+(str)(e)
         })
@@ -54,7 +54,7 @@ def signup(request):
             "status":200,"registered":True,"message":"User registered successfully"
         })
     except Exception as e:
-        # send_error_mail(inspect.stack()[0][3], request.data, e)
+        send_error_mail(inspect.stack()[0][3], request.data, e)
         return Response({
             "status":500,"registered":False,"message":'something went wrong (s4):'+(str)(e)
         })

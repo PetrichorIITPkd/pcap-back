@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'guq^ch8ob08nf6al1zo(p**!@xeikuv175)2-f@t54nl_m17^1'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = ['*']
@@ -143,10 +143,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'verify.petrichor@gmail.com'
+EMAIL_HOST_USER = os.getenv('MAIL_HOST')
 # EMAIL_HOST_PASSWORD = 'rybdprpmtllwiedg'
-EMAIL_HOST_PASSWORD = 'riipqcznxgnuhbwk'
-EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = os.getenv('MAIL_PWD')
+EMAIL_PORT = os.getenv('MAIL_PORT')
 
 
 SERVER_EMAIL = EMAIL_HOST_USER
@@ -159,6 +159,6 @@ if not DEBUG:
     print(os.environ['DATABASE_URL'])
     import dj_database_url
     db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
+    DATABASES['default'].update(db_from_env) # type: ignore
     print(db_from_env)
     print(DATABASES)
