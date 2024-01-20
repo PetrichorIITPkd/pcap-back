@@ -1,6 +1,8 @@
 import inspect
 from django.db import IntegrityError
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.contrib.auth import authenticate
 from CABack.models import CAProfile
 from app.models import User
 from app.resp import r500, r200
@@ -27,28 +29,26 @@ def signup(request):
     try:
         CAProfile.objects.get(email=dt_email)
         return r500("Email already registered")
-    except CAProfile.DoesNotExist:
-        pass
+    
+    try:
+        user= User.objects.create(username=dt_email,password=dt_password)
+        user.save()
     except Exception as e:
         # send_error_mail(inspect.stack()[0][3], request.data, e)
         return r500('something went wrong (s1):'+(str)(e))
 
     
     try:
-        ca_profile= CAProfile(fullname=dt_fullname,email=dt_email,phone=dt_phone,college=dt_college,year=dt_year)
+        ca_profile= CAProfile.objects.create(fullname=dt_fullname,email=dt_email,phone=dt_phone,college=dt_college,year=dt_year)
+
         ca_profile.generate_ca_code()
+
+        ca_profile.save()
+    
     except IntegrityError as e:
         # send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
         return r500('something went wrong (s3):'+(str)(e))
     except Exception as e:
-        # send_error_mail(inspect.stack()[0][3], request.data, e)
-        return r500('something went wrong (s4):'+(str)(e))
-    ca_profile.save()
+        send_error_mail(inspect.stack()[0][3], request.data, e)
+        return r500('something went wrong :'+(str)(e))
 
-    try:
-        user= User(username=dt_email,password=dt_password)
-        user.save()
-        return r200("")
-    except Exception as e:
-        # send_error_mail(inspect.stack()[0][3], request.data, e)
-        return r500('something went wrong (s2):'+(str)(e))
