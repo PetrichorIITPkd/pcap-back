@@ -18,10 +18,10 @@ def signup(request):
         dt_college = data['college']
         dt_year = data['year']
     except KeyError as e:
-        r500(f'Error: {e}')
+        return r500(f'Error: {e}')
     try:
         CAProfile.objects.get(email=dt_email)
-    except CAProfile.DoesNotExists():
+    except CAProfile.DoesNotExist:
         return r500("Email already registered")
     
     try:
@@ -38,7 +38,7 @@ def signup(request):
         ca_profile.save()
     
     except IntegrityError as e:
-        send_error_mail(inspect.stack()[0][3], request.data, e+"\nintegrity")
+        send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
         return r500('something went wrong :'+(str)(e))
     except Exception as e:
         send_error_mail(inspect.stack()[0][3], request.data, e)
