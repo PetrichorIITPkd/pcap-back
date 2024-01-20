@@ -60,3 +60,26 @@ def signup(request):
             "status":500,"registered":False,"message":'something went wrong (s4):'+(str)(e)
         })
 
+@api_view(['POST'])
+def login(request):
+    data = request.data
+    try:
+        dt_email = data['email']
+        dt_password = data['password']
+    except KeyError as e:
+        return r500(f'Error: {e}')
+    
+    user = authenticate(username = dt_email, password = dt_password)
+    if user is None:
+        return Response({
+            "message": "The username or password is incorrect",
+            "logged-in": "false"
+        })
+    
+    profile = CAProfile.objects.get(email = dt_email)
+    return Response({
+                "ok": "true",
+                "CA": profile.CA,
+                "username": profile.fullname,
+                "registrations": 0
+            })
