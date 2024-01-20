@@ -25,13 +25,11 @@ class CAProfile(models.Model):
 
     def generate_ca_code(self):
         ca = self._random_CACode()
-        print(ca)
         try:
-            CAProfile.objects.get(CA=ca)
+            self.objects.get(ca)
             self.generate_ca_code() 
             # crossing recursion limit is too improbable, 
             # if you are reading it when petrichor actaully became famous 
             # enchanteddev and alonot apologise.
-        except CAProfile.DoesNotExist:
+        except self.DoesNotExist:
             self.CA = ca
-            print(ca)

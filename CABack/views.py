@@ -20,14 +20,10 @@ def signup(request):
         dt_college = data['college']
         dt_year = data['year']
     except KeyError as e:
-        return Response({
-                'status': 404,
-                "registered": False,
-                'message': "Username Already Taken",
-                "username": username
-            })
+        return r500(f'Error: {e}')
     try:
         CAProfile.objects.get(email=dt_email)
+<<<<<<< HEAD
         return r500("Email already registered")
     
     try:
@@ -39,6 +35,18 @@ def signup(request):
 
     
     try:
+=======
+    except CAProfile.DoesNotExist:
+        return r500("Email already registered")
+    
+    try:
+        user= User.objects.create(username=dt_email,password=dt_password)
+        user.save()
+    except Exception as e:
+        send_error_mail(inspect.stack()[0][3], request.data, e)
+        return r500('something went wrong :'+(str)(e))
+    try:
+>>>>>>> parent of a7d3729 (signup error fix)
         ca_profile= CAProfile.objects.create(fullname=dt_fullname,email=dt_email,phone=dt_phone,college=dt_college,year=dt_year)
 
         ca_profile.generate_ca_code()
@@ -46,8 +54,13 @@ def signup(request):
         ca_profile.save()
     
     except IntegrityError as e:
+<<<<<<< HEAD
         # send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
         return r500('something went wrong (s3):'+(str)(e))
+=======
+        send_error_mail(inspect.stack()[0][3], request.data, str(e) + "\nintegrity")
+        return r500('something went wrong :'+(str)(e))
+>>>>>>> parent of a7d3729 (signup error fix)
     except Exception as e:
         send_error_mail(inspect.stack()[0][3], request.data, e)
         return r500('something went wrong :'+(str)(e))
