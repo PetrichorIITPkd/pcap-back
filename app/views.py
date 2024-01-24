@@ -12,6 +12,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.request import Request, Empty
+
+from CABack.models import CAProfile
 from .resp import r500,r200
 from .models import Profile,EventTable,Event
 from userapi import settings
@@ -145,6 +147,7 @@ def user_logout(request):
         }
     )
     # return redirect('login')
+
 @api_view(['POST'])
 def admin_data(request):
     if request.method != "POST":
@@ -154,25 +157,40 @@ def admin_data(request):
     
     data = request.data
     password = data["password"]
-    if "PWD" not in settings.os.environ:
-        return Response({
-            "status": 500,
-            "message": "Password not set at host, Contact someone idk."
-        })
-    if password == settings.os.environ["password"]:
-        return Response({
-            'status': 200,
-            'data': [
-                {
-                    'name': ca.username,
-                    'email': ca.email,
-                    'phone': ca.phone,
-                    'college':  "",
-                    'year': ca.joinYear,
-                    'ca': ca.CA,
-                } for ca in Profile.objects.all() if ca.CA is not None
-            ]
-        })
+    # if "PWD" not in settings.os.environ:
+    #     return Response({
+    #         "status": 500,
+    #         "message": "Password not set at host, Contact someone idk."
+    #     })
+    if password == "password":
+        try:
+            AllData=[]
+            for ca in Profile.objects.all():
+                if ca.CA is not None:
+                    AllData.append({
+                        'name': ca.username,
+                        'email': ca.email,
+                        'phone': ca.phone,
+                        'college':  "",
+                        'year': ca.joinYear,
+                        'ca': ca.CA,
+                    })
+            for ca in CAProfile.objects.all():
+                if ca.CA is not None:
+                    AllData.append({
+                        'name': ca.fullname,
+                        'email': ca.email,
+                        'phone': ca.phone,
+                        'college':  ca.college,
+                        'year': ca.year,
+                        'ca': ca.CA,
+                    })
+            return Response({
+                'status': 200,
+                'data': AllData
+            })
+        except Exception as e:
+            return r500("Bhat nhi toh . Ye lo kha :"+str(e))
     else:
         print(f"someone tried '{password}' as admin password.")
         return Response({
